@@ -1,0 +1,39 @@
+{
+  "name": "waiter_webapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "npm test": "test"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "autoprefixer": "^10.3.6",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.1.1",
+    "bootstrap-icons": "^1.5.0",
+    "chalk": "^4.1.2",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-flash": "^0.0.2",
+    "express-handlebars": "^5.3.4",
+    "express-myconnection": "^1.0.4",
+    "express-session": "^1.17.2",
+    "graceful-fs": "^4.2.8",
+    "pg": "^8.7.1",
+    "postcss-cli": "^9.0.1"
+  },
+  "scripts": {
+    "mystyles:sass": "sass public:assets/css",
+    "test": "mocha",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "mocha": "^9.1.2",
+    "sass": "^1.42.1"
+  }
+}
