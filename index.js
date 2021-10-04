@@ -19,7 +19,7 @@ if (process.env.DATABASE_URL && !local) {
     useSSL = true;
 }
 // which db connection to use
-const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/reg-number';
+const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/waiters';
 
 const pool = new Pool({
     connectionString,
@@ -54,11 +54,8 @@ app.use(bodyParser.json())
 app.use(express.static('public'));
 let list = [{day:"Sunday"},{day:"Monday"},{day:"Tuesday"},{day:"Wednesday"},{day:"Thursday"},{day:"Friday"},{day:"Saturday"}]
 
-app.get('/', (req, res)=>{
-    res.render('index',{
-        list
-    })
-})
+app.get('/', waiterRoute.defaultRoute)
+app.post('/addWaiter', waiterRoute.subscribe)
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {
