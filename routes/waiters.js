@@ -6,12 +6,20 @@ module.exports = function (waitersService) {
 
     let waiter 
     let week = []
+    let waiters = []
 
     async function defaultRoute (req, res){
         week = await waitersService.getDays()
         res.render('index',{
             waiter,
             week
+        })
+    }
+
+    async function waitersAvailable(req, res){
+        waiters = await waitersService.getWaiters()
+        res.render('available-waiters', {
+            waiters
         })
     }
 
@@ -29,6 +37,7 @@ module.exports = function (waitersService) {
 
     return {
         subscribe,
-        defaultRoute
+        defaultRoute,
+        waitersAvailable
     }
 }

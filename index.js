@@ -55,6 +55,7 @@ app.use(express.static('public'));
 
 app.get('/', waiterRoute.defaultRoute)
 app.post('/addWaiter', waiterRoute.subscribe)
+app.get('/available-waiters', waiterRoute.waitersAvailable)
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {

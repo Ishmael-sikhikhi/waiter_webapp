@@ -31,8 +31,13 @@ module.exports = function (pool) {
         return Number(id)        
     };
 
-    async function deleteRecord() {
+    async function getWaiters(){
+        let waiters = await pool.query(`select name from users`)
+        return waiters.rows
+    }
 
+    async function deleteRecord() {
+        await pool.query(`delete from users`)
     };
 
     return {
@@ -40,6 +45,7 @@ module.exports = function (pool) {
         updateShieft,
         getDaysID,
         getDays,
+        getWaiters,
         deleteRecord,
     }
 }
