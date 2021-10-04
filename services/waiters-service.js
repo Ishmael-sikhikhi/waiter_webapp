@@ -18,6 +18,11 @@ module.exports = function (pool) {
 
     };
 
+    async function getDays(){
+        let week = await pool.query(`select day from days`);
+        return week.rows
+    }
+
     async function getDaysID(days){
         var id = ''
         var days = await pool.query(`select id from days where day = $1`, [days])
@@ -27,13 +32,14 @@ module.exports = function (pool) {
     };
 
     async function deleteRecord() {
-        
+
     };
 
     return {
         selectDay,
         updateShieft,
         getDaysID,
+        getDays,
         deleteRecord,
     }
 }

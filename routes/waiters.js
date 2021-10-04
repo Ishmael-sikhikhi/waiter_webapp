@@ -5,10 +5,13 @@ const WaiterService = require('../services/waiters-service');
 module.exports = function (waitersService) {
 
     let waiter 
+    let week = []
 
     async function defaultRoute (req, res){
+        week = await waitersService.getDays()
         res.render('index',{
             waiter,
+            week
         })
     }
 

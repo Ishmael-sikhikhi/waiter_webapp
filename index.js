@@ -52,7 +52,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/jsongreetInstance
 app.use(bodyParser.json())
 app.use(express.static('public'));
-let list = [{day:"Sunday"},{day:"Monday"},{day:"Tuesday"},{day:"Wednesday"},{day:"Thursday"},{day:"Friday"},{day:"Saturday"}]
 
 app.get('/', waiterRoute.defaultRoute)
 app.post('/addWaiter', waiterRoute.subscribe)
