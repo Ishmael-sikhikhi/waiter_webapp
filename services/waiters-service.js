@@ -7,10 +7,14 @@ module.exports = function (pool) {
         let condition = pattern.test(name);
         if (condition === true){
             var days_id = await getDaysID(theDay)
-            var duplicates = await pool.query(`select name, days_id from users where name = $1 and days_id = $2`, [name, days_id]);
+            var duplicates = await pool.query(`select name from users where name = $1`, [name]);
             if (duplicates.rowCount === 0){
-                await pool.query(`insert into users (name,days_id) values ($1,$2)`,[name, days_id]);
-            }            
+                await pool.query(`insert into users (name) values ($1)`,[name]);
+                var users_id = await getUsersID(name);   
+                console.log(users_id);
+                await pool.query(`insert into user_days (users_id, days_id) values ($1,$2)`, [users_id, days_id])           
+            } 
+
         }
     };
 
@@ -31,10 +35,21 @@ module.exports = function (pool) {
         return Number(id)        
     };
 
+    async function getUsersID(users){
+        var id 
+        var user_s = await pool.query(`select id from users where name = $1`, [users])
+        // console.log(user_s[0]);
+        user_s = user_s.rows
+        id = user_s[0].id
+        return Number(id)  
+    }
+
     async function getWaiters(){
         let waiters = await pool.query(`select name from users`)
         return waiters.rows
     }
+
+    
 
     async function deleteRecord() {
         await pool.query(`delete from users`)
@@ -47,5 +62,6 @@ module.exports = function (pool) {
         getDays,
         getWaiters,
         deleteRecord,
+        getUsersID
     }
 }
