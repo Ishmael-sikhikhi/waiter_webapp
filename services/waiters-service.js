@@ -7,14 +7,24 @@ module.exports = function (pool) {
         let condition = pattern.test(name);
         if (condition === true){
             var days_id = await getDaysID(theDay)
+            
+            var users_id
             var duplicates = await pool.query(`select name from users where name = $1`, [name]);
             if (duplicates.rowCount === 0){
+                
                 await pool.query(`insert into users (name) values ($1)`,[name]);
-                var users_id = await getUsersID(name);   
+                users_id = await getUsersID(name);
                 console.log(users_id);
                 await pool.query(`insert into user_days (users_id, days_id) values ($1,$2)`, [users_id, days_id])           
-            } 
+            }else {
+                users_id = await getUsersID(name);
 
+                let checkOnUser_days = await pool.query(`SELECT * FROM user_days WHERE users_id = $1 AND days_id = $2`, [users_id, days_id]);
+                console.log(checkOnUser_days.rows)
+                if(checkOnUser_days.rowCount === 0){
+                    await pool.query(`insert into user_days (users_id, days_id) values ($1,$2)`, [users_id, days_id])        
+                }
+            }
         }
     };
 
@@ -45,14 +55,16 @@ module.exports = function (pool) {
     }
 
     async function getWaiters(){
-        let waiters = await pool.query(`select name from users`)
+        let waiters = await pool.query(`select users.name, days.day from user_days 
+        inner join users 
+        on user_days.users_id = users.id
+        inner join days
+        on user_days.days_id = days.id`)
         return waiters.rows
-    }
-
-    
+    }    
 
     async function deleteRecord() {
-        await pool.query(`delete from users`)
+        await pool.query(`delete from user_days`)
     };
 
     return {

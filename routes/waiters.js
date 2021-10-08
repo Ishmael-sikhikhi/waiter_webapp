@@ -18,6 +18,7 @@ module.exports = function (waitersService) {
 
     async function waitersAvailable(req, res){
         waiters = await waitersService.getWaiters()
+        console.log(waiters)
         res.render('available-waiters', {
             waiters
         })
@@ -35,9 +36,16 @@ module.exports = function (waitersService) {
         res.redirect('/')
     };
 
+    async function weeklyReset(req, res){
+        await waitersService.deleteRecord()
+        req.flash('info', "Waiters's list has successfully resetted!")
+        res.redirect('/')
+    }
+
     return {
         subscribe,
         defaultRoute,
-        waitersAvailable
+        waitersAvailable,
+        weeklyReset
     }
 }

@@ -5,9 +5,7 @@ create table days (
 
 create table users (
 	id serial not null primary key,
-	name text not null,
-	days_id int not null,
-	foreign key (days_id) references days(id)
+	name text not null
 );
 
 insert into days (day) values ('Sunday');

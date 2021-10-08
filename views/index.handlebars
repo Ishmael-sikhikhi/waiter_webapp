@@ -13,6 +13,12 @@
             </li>
             {{/each}}
         </ul>
+        <div class="info text-center text-success">
+            {{messages.info}}
+        </div>
+        <div class="error text-center text-danger">
+            {{messages.error}}
+        </div>
 
     </div>
 
@@ -42,7 +48,9 @@
             <input type="submit" class="m-4 btn btn-success" value="Add waiter">
         </form>
         <input type="submit" class="m-4 btn btn-primary" value="Update">
-        <input type="submit" class="m-4 btn btn-danger" value="Reset">
+        <form action="/reset" method="GET">
+            <input type="submit" class="m-4 btn btn-danger" value="Reset">
+        </form>
         <a href="./available-waiters" class="m-4 btn btn-info">Available waiters</a>
     </div>
 </div>
