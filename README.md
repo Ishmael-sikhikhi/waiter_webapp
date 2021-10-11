@@ -1,0 +1,1 @@
+[![Build Status](https://app.travis-ci.com/Ishmael-sikhikhi/waiter_webapp.svg?branch=main)](https://app.travis-ci.com/Ishmael-sikhikhi/waiter_webapp)

@@ -9,7 +9,7 @@ create table users (
 );
 
 insert into days (day) values ('Sunday');
-insert into days (day) values ('Monday');q
+insert into days (day) values ('Monday');
 insert into days (day) values ('Tuesday');
 insert into days (day) values ('Wednesday');
 insert into days (day) values ('Thursday');
