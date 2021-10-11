@@ -1,5 +1,15 @@
+'use strict'
 module.exports = function (pool) {
     var pattern = /^[A-Za-z]+$/
+
+    let sundayShift
+    let mondayShift
+    let tuesdayShift
+    let wednesdayShift
+    let thursdayShift
+    let fridayShift
+    let saturdayShift
+
     async function selectDay(values) {
         var name = values.name;
         name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
@@ -60,7 +70,8 @@ module.exports = function (pool) {
         on user_days.users_id = users.id
         inner join days
         on user_days.days_id = days.id`)
-        return waiters.rows
+        return waiters = waiters.rows       
+        
     }    
 
     async function deleteRecord() {

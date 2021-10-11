@@ -6,11 +6,75 @@
 </div>
 
 <div class="container">
-    {{#each waiters}}
-    <li class=" d-block m-2 text-center" value="{{name}}" name="{{ame}}">
-        <strong>{{name}} is available on:&nbsp {{day}}</strong> 
-    </li>
-    {{/each}}
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Sunday</th>
+                <th scope="col">Monday</th>
+                <th scope="col">Tuesday</th>
+                <th scope="col">Wednesday</th>
+                <th scope="col">Thursday</th>
+                <th scope="col">Friday</th>
+                <th scope="col">Saturday</th>
+
+            </tr>
+        </thead>
+        <tr>
+       {{#each sunday}} 
+            <tr>
+                <td>
+                    {{this}}
+                </td>
+            </tr>
+       {{/each}}  
+       {{#each monday}} 
+            <tr>
+                <td>
+                    {{this}}
+                </td>
+            </tr>
+       {{/each}} 
+       {{#each tuesday}} 
+            <tr>
+                <td>
+                    {{this}}
+                </td>
+            </tr>
+       {{/each}} 
+       {{#each wednesday}} 
+            <tr>
+                <td>
+                    {{this}}
+                </td>
+            </tr>
+       {{/each}} 
+       {{#each thursday}} 
+            <tr>
+                <td>
+                    {{this}}
+                </td>
+            </tr>
+       {{/each}} 
+       {{#each friday}} 
+            <tr>
+                <td>
+                    {{this}}
+                </td>
+            </tr>
+       {{/each}} 
+       {{#each saturday}} 
+            <tr>
+                <td>
+                    {{this}}
+                </td>
+            </tr>
+       {{/each}}     
+        </tr>
+    </table>
+
+
+
+    
     <br>
     <a href="./" class="m-4 btn btn-success">Home</a>
 </div>
