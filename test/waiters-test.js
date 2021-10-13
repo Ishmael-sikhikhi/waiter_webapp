@@ -15,6 +15,15 @@ let waiters = WaiterService(pool)
 
 beforeEach(async function () {
     // clean the tables before each test run
-    await waiters.resetDB();
+    await waiters.deleteRecord();
 
 });
+
+describe('Waiter avalability', ()=>{
+    it('Should add waiters name and select day shift', ()=>{
+        await waiters.deleteRecord();
+
+        assert.equal()
+
+    })
+})

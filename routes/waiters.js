@@ -29,53 +29,65 @@ module.exports = function (waitersService) {
         let friday = []
         let saturday = []
 
-        if (waiters.length !== 0) {
+        if (waiters.length === 0) {
+            req.flash('errorAvailable', "No waiters available, sorry!")
+        }
+
+        else {
             for (var k = 0; k < waiters.length; k++) {
 
-                    if (waiters[k].day === 'Sunday') {
-                        sunday.push(waiters[k].name)
-                    }
-                    if (waiters[k].day === 'Monday') {
-                        monday.push(waiters[k].name)
-                    }
-                    if (waiters[k].day === 'Tuesday') {
-                        tuesday.push(waiters[k].name)
-                    }
-                    if (waiters[k].day === 'Wednesday') {
-                        wednesday.push(waiters[k].name)
-                    }
-                    if (waiters[k].day === 'Thursday') {
-                        thursday.push(waiters[k].name)
-                    }
-                    if (waiters[k].day === 'Friday') {
-                        friday.push(waiters[k].name)
-                    }
-                    if (waiters[k].day === 'Saturday') {
-                        saturday.push(waiters[k].name)
-                    }
+                if (waiters[k].day === 'Sunday') {
+                    sunday.push(waiters[k].name)
+                }
+                if (waiters[k].day === 'Monday') {
+                    monday.push(waiters[k].name)
+                }
+                if (waiters[k].day === 'Tuesday') {
+                    tuesday.push(waiters[k].name)
+                }
+                if (waiters[k].day === 'Wednesday') {
+                    wednesday.push(waiters[k].name)
+                }
+                if (waiters[k].day === 'Thursday') {
+                    thursday.push(waiters[k].name)
+                }
+                if (waiters[k].day === 'Friday') {
+                    friday.push(waiters[k].name)
+                }
+                if (waiters[k].day === 'Saturday') {
+                    saturday.push(waiters[k].name)
+                }
             }
 
-            res.render('available-waiters', {
-                sunday,monday, tuesday, wednesday, thursday, friday,saturday,
-                week
-            })
         }
 
-        else if (waiters.length === 0){
-            req.flash('error', "No waiters available, sorry!")
-        }
+        res.render('available-waiters', {
+            sunday, monday, tuesday, wednesday, thursday, friday, saturday,
+            week
+        })
 
-        
     }
 
     async function subscribe(req, res) {
+        var pattern = /^[A-Za-z]+$/
+
         var getName = req.body.name;
         var getDay = req.body.days;
-        console.log(getDay)
-        waiter = waitersService.selectDay({
-            name: getName,
-            day: getDay
-        })
+
+        let condition = pattern.test(getName);
+
+        if (condition === true) {
+            if (getName !== '' || getName !== undefined) {
+                waiter = waitersService.selectDay({
+                    name: getName,
+                    day: getDay
+                })
+            }
+
+        }
+        else {
+            req.flash('error', "Please enter name or correct name")
+        }
 
         res.redirect('/')
     };
