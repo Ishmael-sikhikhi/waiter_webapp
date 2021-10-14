@@ -17,10 +17,22 @@ module.exports = function (waitersService) {
         })
     }
 
+    async function owner(req, res){
+        res.render('available-waiters')
+    }
+
+    async function waitersPage(req, res){
+        week = await waitersService.getDays()
+        res.render('waiter-log',{
+            week
+        })
+    }
+
     async function waitersAvailable(req, res) {
         waiters = await waitersService.getWaiters()
+        // console.log(waiters)
         week = await waitersService.getDays()
-        console.log(waiters)
+        // console.log(waiters)
         let sunday = []
         let monday = []
         let tuesday = []
@@ -41,6 +53,7 @@ module.exports = function (waitersService) {
                 }
                 if (waiters[k].day === 'Monday') {
                     monday.push(waiters[k].name)
+                    console.log(monday);
                 }
                 if (waiters[k].day === 'Tuesday') {
                     tuesday.push(waiters[k].name)
@@ -61,7 +74,7 @@ module.exports = function (waitersService) {
 
         }
 
-        res.render('available-waiters', {
+        res.render('owner', {
             sunday, monday, tuesday, wednesday, thursday, friday, saturday,
             week
         })
@@ -95,13 +108,15 @@ module.exports = function (waitersService) {
     async function weeklyReset(req, res) {
         await waitersService.deleteRecord()
         req.flash('info', "Waiters's list has successfully resetted!")
-        res.redirect('/')
+        res.redirect('owner')
     }
 
     return {
         subscribe,
         defaultRoute,
         waitersAvailable,
-        weeklyReset
+        weeklyReset,
+        owner,
+        waitersPage
     }
 }
