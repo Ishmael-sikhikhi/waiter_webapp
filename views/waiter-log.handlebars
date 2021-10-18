@@ -6,16 +6,15 @@
 </div>
 <div class="container">
     <div class="d-inline text-center">
-        <ul>
-            {{#each week}}
-            <li class="btn bg-light m-2" value="{{day}}" name ="{{day}}">
-                {{day}}
-            </li>
-            {{/each}}
-        </ul>
-        <div class="info text-center text-success">
-            {{messages.info}}
-        </div>
+        <form action="/waiters/{{username}}" method="POST">
+            <ul>
+                {{#each week}}
+                <li class="btn bg-light m-2" value="{{day}}" name="{{day}}">
+                    <input type="checkbox" name="day" value="{{day}}"> {{day}}
+                </li>
+                {{/each}}
+            </ul>
+        {{!-- </form> --}}
         <div class="error text-center text-danger">
             {{messages.error}}
         </div>
@@ -31,24 +30,15 @@
 
     </div>
     <div class="clearfix text-center" style="margin-top: 11%;">
-        <form action="/addWaiter" method="POST">
-            <label for="name" style="margin-right: 5px;">Name</label><input type="text" class="ml-1" name="name"><label
-                for="day" style="margin-left: 10px; margin-right:5px">Day</label> <span>
-                <select name="days" id="days" class="py-1">
-                    <option value="Sunday">Sunday</option>
-                    <option value="Monday">Monday</option>
-                    <option value="Tuesday">Tuesday</option>
-                    <option value="Wednesday">Wednesday</option>
-                    <option value="Thursday">Thursday</option>
-                    <option value="Friday">Friday</option>
-                    <option value="Saturday">Saturday</option>
-                </select></span>
+        {{!-- <form action="/waiters/{{username}}" method="POST"> --}}
+            <label for="name"> <input class="bg-light" type="text" name="{{username}}" value="{{username}}" disabled
+                    placeholder="{{:username}}"></label>
             <br>
             <div class="d-flex justify-content-center">
-            <input type="submit" class="m-4 btn btn-success" value="Add waiter">
+                <input type="submit" class="m-4 btn btn-success" value="Add waiter">
         </form>
         <input type="submit" class="m-4 btn btn-primary" value="Update">
-        
+
         <a href="../" class="m-4 btn btn-success">Logout</a>
     </div>
 </div>

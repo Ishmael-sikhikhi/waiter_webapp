@@ -9,7 +9,11 @@
     <div class="errorAva text-center text-danger">
         {{messages.errorAvailable}}
     </div>
+    <div class="info text-center text-success">
+        {{messages.info}}
+    </div>
     <table class="table table-bordered">
+        {{#each week}}
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Sunday</th>
@@ -31,6 +35,7 @@
 
             </tr>
         </thead>
+        {{/each}}
         <tr>
             {{#each sunday}}
         <tr>
@@ -88,8 +93,8 @@
     <br>
     <div class="d-flex justify-content-center">
         <a href="./" class="m-4 btn btn-success">Home</a>
-         <input type="submit" class="m-4 btn btn-primary" value="Update">
-           <form action="/reset" method="GET">
+        <input type="submit" class="m-4 btn btn-primary" value="Update">
+        <form action="/reset" method="GET">
             <input type="submit" class="m-4 btn btn-danger" value="Reset">
         </form>
     </div>
