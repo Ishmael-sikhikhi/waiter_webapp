@@ -54,11 +54,12 @@ app.use(bodyParser.json())
 app.use(express.static('public'));
 
 app.get('/', waiterRoute.defaultRoute)
-app.get('/owner', waiterRoute.owner)
+// app.get('/owner', waiterRoute.owner)
 app.get('/waiters/:username', waiterRoute.waitersPage)
 app.post('/waiters/:username', waiterRoute.subscribe)
-app.get('/available-waiters', waiterRoute.waitersAvailable)
+app.get('/owner', waiterRoute.waitersAvailable)
 app.get('/reset', waiterRoute.weeklyReset)
+app.post('/waiters/:username/update', waiterRoute.shiftUpdate)
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {

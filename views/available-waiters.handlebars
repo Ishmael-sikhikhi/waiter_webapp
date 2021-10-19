@@ -13,19 +13,9 @@
         {{messages.info}}
     </div>
     <table class="table table-bordered">
-        {{#each week}}
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Sunday</th>
-                {{#each sunday}}
-            <tr>
-                <td>
-                    {{this}}
-                </td>
-            </tr>
 
-            {{/each}}
-
+        <tr>
+            <th scope="col">Sunday</th>
             <th scope="col">Monday</th>
             <th scope="col">Tuesday</th>
             <th scope="col">Wednesday</th>
@@ -33,59 +23,72 @@
             <th scope="col">Friday</th>
             <th scope="col">Saturday</th>
 
-            </tr>
-        </thead>
-        {{/each}}
+        </tr>
+
         <tr>
-            {{#each sunday}}
-        <tr>
+
+        <tr>{{#each sunday}}
+
             <td>
                 {{this}}
             </td>
+
+
+            {{/each}}
         </tr>
-        {{/each}}
-        {{#each monday}}
-        <tr>
+        <tr>{{#each monday}}
+
             <td>
                 {{this}}
             </td>
+
+
+            {{/each}}
         </tr>
-        {{/each}}
-        {{#each tuesday}}
-        <tr>
+        <tr>{{#each tuesday}}
+
             <td>
                 {{this}}
             </td>
+
+
+            {{/each}}
         </tr>
-        {{/each}}
-        {{#each wednesday}}
-        <tr>
+        <tr>{{#each wednesday}}
+
             <td>
                 {{this}}
             </td>
+
+
+            {{/each}}
         </tr>
-        {{/each}}
-        {{#each thursday}}
-        <tr>
+        <tr>{{#each thursday}}
+
             <td>
                 {{this}}
             </td>
+
+
+            {{/each}}
         </tr>
-        {{/each}}
-        {{#each friday}}
-        <tr>
+        <tr>{{#each friday}}
+
             <td>
                 {{this}}
             </td>
+
+
+            {{/each}}
         </tr>
-        {{/each}}
-        {{#each saturday}}
-        <tr>
+        <tr>{{#each saturday}}
+
             <td>
                 {{this}}
             </td>
+
+            {{/each}}
         </tr>
-        {{/each}}
         </tr>
     </table>
 

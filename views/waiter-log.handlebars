@@ -6,6 +6,7 @@
 </div>
 <div class="container">
     <div class="d-inline text-center">
+
         <form action="/waiters/{{username}}" method="POST">
             <ul>
                 {{#each week}}
@@ -14,7 +15,8 @@
                 </li>
                 {{/each}}
             </ul>
-        {{!-- </form> --}}
+            {{!--
+        </form> --}}
         <div class="error text-center text-danger">
             {{messages.error}}
         </div>
@@ -30,15 +32,19 @@
 
     </div>
     <div class="clearfix text-center" style="margin-top: 11%;">
-        {{!-- <form action="/waiters/{{username}}" method="POST"> --}}
-            <label for="name"> <input class="bg-light" type="text" name="{{username}}" value="{{username}}" disabled
-                    placeholder="{{:username}}"></label>
-            <br>
-            <div class="d-flex justify-content-center">
-                <input type="submit" class="m-4 btn btn-success" value="Add waiter">
-        </form>
-        <input type="submit" class="m-4 btn btn-primary" value="Update">
 
-        <a href="../" class="m-4 btn btn-success">Logout</a>
+        <label for="name"> <input class="bg-light" type="text" name="{{username}}" value="{{username}}" disabled
+                placeholder="{{:username}}"></label>
+        <br>
+        <div class="d-flex justify-content-center">
+            <input type="submit" class="m-4 btn btn-success" value="Add waiter">
+                <form action="/waiters/{{username}}/update" method="POST">
+                    <input type="submit" class="m-4 btn btn-primary" value="Update">
+                </form>
+            </form>
+
+
+
+            <a href="../" class="m-4 btn btn-success">Logout</a>
+        </div>
     </div>
-</div>

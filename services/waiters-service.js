@@ -13,28 +13,26 @@ module.exports = function (pool) {
         if (condition === true) {
 
             var users_id
-            users_id = await getUsersID(name);
-        var checkWaiter = await pool.query(`select * from user_days where users_id = $1`, [users_id])
-            if (checkWaiter.rowCount === 0) {
-                for (var i = 0; i < theDays.length; i++) {
-                    var theDay = theDays[i]
 
-                    var days_id = await getDaysID(theDay)
-                    var duplicates = await pool.query(`select name from users where name = $1`, [name]);
-                    if (duplicates.rowCount === 0) {
+            
+            for (var i = 0; i < theDays.length; i++) {
+                var theDay = theDays[i]
 
-                        await pool.query(`insert into users (name) values ($1)`, [name]);
-                        users_id = await getUsersID(name);
-                        console.log(users_id);
+                var days_id = await getDaysID(theDay)
+                var duplicates = await pool.query(`select name from users where name = $1`, [name]);
+                if (duplicates.rowCount === 0) {
+
+                    await pool.query(`insert into users (name) values ($1)`, [name]);
+                    users_id = await getUsersID(name);
+                    console.log(users_id);
+                    await pool.query(`insert into user_days (users_id, days_id) values ($1,$2)`, [users_id, days_id])
+                } else {
+                    users_id = await getUsersID(name);
+
+                    let checkOnUser_days = await pool.query(`SELECT * FROM user_days WHERE users_id = $1 AND days_id = $2`, [users_id, days_id]);
+                    console.log(checkOnUser_days.rows)
+                    if (checkOnUser_days.rowCount === 0) {
                         await pool.query(`insert into user_days (users_id, days_id) values ($1,$2)`, [users_id, days_id])
-                    } else {
-                        users_id = await getUsersID(name);
-
-                        let checkOnUser_days = await pool.query(`SELECT * FROM user_days WHERE users_id = $1 AND days_id = $2`, [users_id, days_id]);
-                        console.log(checkOnUser_days.rows)
-                        if (checkOnUser_days.rowCount === 0) {
-                            await pool.query(`insert into user_days (users_id, days_id) values ($1,$2)`, [users_id, days_id])
-                        }
                     }
                 }
             }
@@ -42,7 +40,25 @@ module.exports = function (pool) {
     }
 
     async function updateShieft(values) {
+        var theDays = values.day;
+        var name = values.name;
+        name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+        await pool.query(`delete from user_days`)
+        for (var i = 0; i < theDays.length; i++) {
+            var theDay = theDays[i]
 
+            var days_id = await getDaysID(theDay)
+            var duplicates = await pool.query(`select name from users where name = $1`, [name]);
+            if (duplicates.rowCount === 0) {
+
+                await pool.query(`insert into users (name) values ($1)`, [name]);
+                users_id = await getUsersID(name);
+                await pool.query(`insert into user_days (users_id, days_id) values ($1,$2)`, [users_id, days_id])
+            } else {
+                users_id = await getUsersID(name);
+                await pool.query(`insert into user_days (users_id, days_id) values ($1,$2)`, [users_id, days_id])
+            }
+        }
     };
 
     async function getDays() {
@@ -60,11 +76,13 @@ module.exports = function (pool) {
 
     async function getUsersID(users) {
         var id
-        var user_s = await pool.query(`select id from users where name = $1`, [users])
-        // console.log(user_s[0]);
-        user_s = user_s.rows
-        id = user_s[0].id
-        return Number(id)
+        var waiter = await pool.query(`select id from users where name = $1`, [users])
+        // console.log(waiter[0]);
+        if (waiter.rowCount !== 0) {
+            waiter = waiter.rows
+            id = waiter[0].id
+            return Number(id)
+        }
     }
 
     async function getWaiters() {

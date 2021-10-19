@@ -17,16 +17,16 @@ module.exports = function (waitersService) {
         })
     }
 
-    function owner(req, res){
-        res.render('available-waiters')
-    }
+    // function owner(req, res) {
+    //     res.render('available-waiters')
+    // }
 
-    async function waitersPage(req, res){
+    async function waitersPage(req, res) {
         week = await waitersService.getDays()
         console.log(req.params.username);
         var username = req.params.username
         // res.send('req.params.username')
-        res.render('waiter-log',{
+        res.render('waiter-log', {
             week, username
         })
     }
@@ -77,7 +77,7 @@ module.exports = function (waitersService) {
 
         }
 
-        res.render('owner', {
+        res.render('available-waiters', {
             sunday, monday, tuesday, wednesday, thursday, friday, saturday,
             week
         })
@@ -86,35 +86,45 @@ module.exports = function (waitersService) {
 
     async function subscribe(req, res) {
         var pattern = /^[A-Za-z]+$/
-        var weekshieft = []
-        var getName = req.params.username
-        console.log("Waiter: " + getName)
+        var username = req.params.username
+        console.log("Waiter: " + username)
         var getDay = req.body.day;
-        
 
-        console.log("Selected days "+ getDay)
-        
+        console.log("Selected days " + getDay)
+
         week = await waitersService.getDays()
 
-        // weekshieft = getDay.split(',')
-        
-
-        let condition = pattern.test(getName);
+        let condition = pattern.test(username);
 
         if (condition === true) {
-            if (getName !== '' || getName !== undefined) {
+            if (username !== '' || username !== undefined) {
                 waiter = waitersService.selectDay({
-                    name: getName,
+                    name: username,
                     day: getDay
                 })
             }
 
         }
 
-        res.render('waiter-log',{
-            week,weekshieft
+        res.render('waiter-log', {
+            week, username
         })
     };
+
+    async function shiftUpdate(req, res) {
+        var username = res.params.username
+        var day = req.body.day
+
+        week = await waitersService.getDays()
+        await waitersService.updateShieft({
+            name: username,
+            day: getDay
+        })
+
+        res.render('waiter-log', {
+            week, username
+        })
+    }
 
     async function weeklyReset(req, res) {
         await waitersService.deleteRecord()
@@ -127,7 +137,8 @@ module.exports = function (waitersService) {
         defaultRoute,
         waitersAvailable,
         weeklyReset,
-        owner,
-        waitersPage
+        // owner,
+        waitersPage,
+        shiftUpdate
     }
 }
