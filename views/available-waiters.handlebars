@@ -14,13 +14,9 @@
     </div>
     <table class="table table-bordered">
         <tr>
-            <th scope="col">Sunday</th>
-            <th scope="col">Monday</th>
-            <th scope="col">Tuesday</th>
-            <th scope="col">Wednesday</th>
-            <th scope="col">Thursday</th>
-            <th scope="col">Friday</th>
-            <th scope="col">Saturday</th>
+            {{#each week}}
+            <th>{{day}}</th>
+            {{/each}}
         </tr>
         <tr>
             <td>
