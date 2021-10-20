@@ -77,6 +77,10 @@ module.exports = function (waitersService) {
 
         }
 
+        if (sunday.length === 3 ){
+            week[0].z
+        }
+
         res.render('available-waiters', {
             sunday, monday, tuesday, wednesday, thursday, friday, saturday,
             week
