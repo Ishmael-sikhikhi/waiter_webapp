@@ -20,10 +20,10 @@ beforeEach(async function () {
 });
 
 describe('Waiter avalability', ()=>{
-    it('Should add waiters name and select day shift', ()=>{
+    it('Should add waiters name and select day shift', async ()=>{
         await waiters.deleteRecord();
 
-        assert.equal()
+        assert.deepEqual([], await waiters.getWaiters())
 
     })
 })
