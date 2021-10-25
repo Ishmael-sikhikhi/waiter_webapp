@@ -58,7 +58,6 @@ app.get('/waiters/:username', waiterRoute.waitersPage)
 app.post('/waiters/:username', waiterRoute.subscribe)
 app.get('/owner', waiterRoute.waitersAvailable)
 app.get('/reset', waiterRoute.weeklyReset)
-// app.post('/waiters/:username/update', waiterRoute.shiftUpdate)
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {
