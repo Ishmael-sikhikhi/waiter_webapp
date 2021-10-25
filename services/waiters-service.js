@@ -7,16 +7,16 @@ module.exports = function (pool) {
         var name = values.name;
         name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
         var theDays = values.day;
-       
+
         var theDays = []
         theDays = values.day
         let condition = pattern.test(name);
         if (condition === true) {
             var duplicates = await pool.query(`select name from users where name = $1`, [name]);
-            
-            var users_id = await getUsersID(name);  
-            await updateShieft(users_id);  
-                    
+
+            var users_id = await getUsersID(name);
+            await updateShieft(users_id);
+
             for (var i = 0; i < theDays.length; i++) {
                 var theDay = theDays[i]
                 if (duplicates.rowCount === 0) {
@@ -25,7 +25,7 @@ module.exports = function (pool) {
                     users_id = await getUsersID(name);
                     await pool.query(`insert into user_days (users_id, days_id) values ($1,$2)`, [users_id, theDay])
                 } else {
-                    
+
                     let checkOnUser_days = await pool.query(`SELECT * FROM user_days WHERE users_id = $1 AND days_id = $2`, [users_id, theDay]);
                     console.log(checkOnUser_days.rows)
                     if (checkOnUser_days.rowCount === 0) {
@@ -33,35 +33,55 @@ module.exports = function (pool) {
                     }
                 }
             }
-        }       
+        }
     }
 
     async function chechDays(waiterName) {
         var days = await getDays();
         waiterName = waiterName.charAt(0).toUpperCase() + waiterName.slice(1).toLowerCase();
-        console.log(waiterName);
-
 
         var user_id = await getUsersID(waiterName);
 
-        console.log(user_id);
-
-        
         const findShiftId = `select count(*) as day_count from user_days where users_id = $1 and days_id = $2`;
 
-        for(var i = 0; i < days.length; i++){
-            
+        for (var i = 0; i < days.length; i++) {
+
             const currentDay = days[i];
 
             // is there a shift for the current day...
 
             var result = await pool.query(findShiftId, [user_id, currentDay.id])
-            const dayCount =result.rows[0].day_count;
+            const dayCount = result.rows[0].day_count;
 
             if (dayCount > 0) {
                 currentDay.selected = true;
             } else {
                 currentDay.selected = false;
+            }
+        }
+
+        return days;
+    }
+
+    async function daysColor() {
+        var days = await getDays();
+        const findShiftId = `select count(*) as day_count from user_days where days_id = $1`;
+
+        for (var i = 0; i < days.length; i++) {
+
+            const currentDay = days[i];
+
+            // is there a shift for the current day...
+
+            var result = await pool.query(findShiftId, [currentDay.id])
+            const dayCount = result.rows[0].day_count;
+
+            if (dayCount < 3) {
+                currentDay.color = "bg-warning";
+            } else if (dayCount > 3) {
+                currentDay.color = "bg-danger"
+            } else {
+                currentDay.color = "bg-success";
             }
         }
 
@@ -75,7 +95,7 @@ module.exports = function (pool) {
     async function getDays() {
         let week = await pool.query(`select id, day from days`);
         return week.rows
-    }    
+    }
 
     async function getUsersID(users) {
         var id
@@ -107,6 +127,7 @@ module.exports = function (pool) {
         getWaiters,
         deleteRecord,
         getUsersID,
-        chechDays
+        chechDays,
+        daysColor
     }
 }

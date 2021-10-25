@@ -34,7 +34,7 @@ module.exports = function (waitersService) {
     async function waitersAvailable(req, res) {
         waiters = await waitersService.getWaiters()
         // console.log(waiters)
-        week = await waitersService.getDays()
+        week = await waitersService.daysColor()
         // console.log(waiters)
         let sunday = []
         let monday = []
@@ -111,7 +111,7 @@ module.exports = function (waitersService) {
         }
 
         res.render('waiter-log',{
-            week, username
+            week, username, day
         });
     };    
 
