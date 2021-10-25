@@ -22,12 +22,12 @@ module.exports = function (waitersService) {
     // }
 
     async function waitersPage(req, res) {
-        week = await waitersService.getDays()
-        console.log(req.params.username);
-        var username = req.params.username
-        // res.send('req.params.username')
+        let username = req.params.username;
+        const week = await waitersService.chechDays(username);
+        console.log(week);
         res.render('waiter-log', {
-            week, username
+            week, 
+            username
         })
     }
 
@@ -44,6 +44,8 @@ module.exports = function (waitersService) {
         let friday = []
         let saturday = []
 
+        var myClass = [{Class:'Sun'},{Class:'Mon'},{Class:'Tue'},{Class:'Wed'},{Class:'Thu'},{Class:'Fri'},{Class:'Sat'}]
+
         if (waiters.length === 0) {
             req.flash('errorAvailable', "No waiters available, sorry!")
         }
@@ -55,8 +57,7 @@ module.exports = function (waitersService) {
                     sunday.push(waiters[k].name)
                 }
                 if (waiters[k].day === 'Monday') {
-                    monday.push(waiters[k].name)
-                    console.log(monday);
+                    monday.push(waiters[k].name)                   
                 }
                 if (waiters[k].day === 'Tuesday') {
                     tuesday.push(waiters[k].name)
@@ -77,10 +78,7 @@ module.exports = function (waitersService) {
 
         }
 
-        if (sunday.length === 3 ){
-            week[0].z
-        }
-
+      
         res.render('available-waiters', {
             sunday, monday, tuesday, wednesday, thursday, friday, saturday,
             week
@@ -92,11 +90,11 @@ module.exports = function (waitersService) {
         var pattern = /^[A-Za-z]+$/
         var username = req.params.username
         console.log("Waiter: " + username)
-        var getDay = req.body.day;
+        var day = req.body.day;
 
-        console.log("Selected days " + getDay)
+        console.log("Selected days " + day)
 
-        week = await waitersService.getDays()
+        week = await waitersService.chechDays(username)
 
         let condition = pattern.test(username);
 
@@ -104,31 +102,18 @@ module.exports = function (waitersService) {
             if (username !== '' || username !== undefined) {
                 waiter = waitersService.selectDay({
                     name: username,
-                    day: getDay
+                    day: day
                 })
             }
-
+        }
+        else{
+            req.flash('error', "This name cannot get days, please correct name");
         }
 
-        res.render('waiter-log', {
+        res.render('waiter-log',{
             week, username
-        })
-    };
-
-    async function shiftUpdate(req, res) {
-        var username = res.params.username
-        var day = req.body.day
-
-        week = await waitersService.getDays()
-        await waitersService.updateShieft({
-            name: username,
-            day: getDay
-        })
-
-        res.render('waiter-log', {
-            week, username
-        })
-    }
+        });
+    };    
 
     async function weeklyReset(req, res) {
         await waitersService.deleteRecord()
@@ -141,8 +126,6 @@ module.exports = function (waitersService) {
         defaultRoute,
         waitersAvailable,
         weeklyReset,
-        // owner,
         waitersPage,
-        shiftUpdate
     }
 }

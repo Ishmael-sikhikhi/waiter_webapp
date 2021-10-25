@@ -11,7 +11,7 @@
             <ul>
                 {{#each week}}
                 <li class="btn bg-light m-2" value="{{day}}" name="{{day}}">
-                    <input type="checkbox" name="day" value="{{day}}"> {{day}}
+                    <input type="checkbox" name="day" value="{{id}}" {{#if selected}}checked{{/if}} > {{day}} 
                 </li>
                 {{/each}}
             </ul>
@@ -29,6 +29,7 @@
         <h4>About shift</h4>
         <p>We are in need of <strong>three waiters</strong> to work per shift. Please add your name if you will be
             available so we can know who will be available. Your presence will be appreciated.</p>
+           
 
     </div>
     <div class="clearfix text-center" style="margin-top: 11%;">
@@ -37,10 +38,8 @@
                 placeholder="{{:username}}"></label>
         <br>
         <div class="d-flex justify-content-center">
-            <input type="submit" class="m-4 btn btn-success" value="Add waiter">
-                <form action="/waiters/{{username}}/update" method="POST">
-                    <input type="submit" class="m-4 btn btn-primary" value="Update">
-                </form>
+            <input type="submit" class="m-4 btn btn-success" value="Add | Update days">
+                
             </form>
 
 
