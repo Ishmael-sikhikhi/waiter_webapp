@@ -50,10 +50,32 @@ describe('Waiter avalability', () => {
         assert.equal(1, await waiters.getUsersID("Apiwe"))
 
     })
-    it('Should reset able to reset shifts', async () => {
-        await waiters.deleteRecord();
-        assert.deepEqual([], await waiters.getWaiters())
 
+    it('update function help to update users', async ()=>{
+        await waiters.deleteRecord()
+        var days = [1, 2, 3]
+        await waiters.selectDay({ name: 'Apiwe', day: days })
+        await waiters.updateShieft(1)
+        days = [1, 4, 5]
+        await waiters.selectDay({ name: 'Apiwe', day: days })
+        assert.deepEqual([
+            {
+              "day": "Sunday",
+              "name": "Apiwe"
+            },
+            {
+              "day": "Wednesday",
+              "name": "Apiwe"
+            },
+            {
+              "day": "Thursday",
+              "name": "Apiwe"
+            }
+          ], await waiters.getWaiters())
+    })
+    it('Should reset able to reset shifts', async () => {
+        await waiters.deleteRecord();        
+        assert.deepEqual([], await waiters.getWaiters())
     })
     it('Function return days', async () => {
         await waiters.deleteRecord()
