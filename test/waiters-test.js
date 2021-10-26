@@ -49,44 +49,15 @@ describe('Waiter avalability', () => {
         await waiters.updateShieft(6)
 
         assert.deepEqual(
-            [
-                {
-                  "day": "Sunday",
-                 "name": "Apiwe"
-                },
-                {
-                 "day": "Monday",
-                 "name": "Apiwe"
-                },
-                {
-                 "day": "Tuesday",
-                  "name": "Apiwe"
-                },
-                {
-                 "day": "Sunday",
-                 "name": "Mandla"
-                },
-                {
-                  "day": "Monday",
-                  "name": "Mandla"
-                },
-                {
-                 "day": "Tuesday",
-                 "name": "Mandla"
-                },
-                {
-                 "day": "Sunday",
-                  "name": "Lwazi"
-                },
-                {
-                 "day": "Monday",
-                 "name": "Lwazi"
-                },
-                {
-                  "day": "Tuesday",
-                 "name": "Lwazi"
-                }
-              ],
+        [{ "day": "Sunday", "name": "Lwazi" },
+        { "day": "Sunday", "name": "Mandla" },
+        { "day": "Sunday", "name": "Apiwe" },
+        { "day": "Monday", "name": "Lwazi" },
+        { "day": "Monday", "name": "Mandla" },
+        { "day": "Monday", "name": "Apiwe" },
+        { "day": "Tuesday", "name": "Lwazi" },
+        { "day": "Tuesday", "name": "Mandla" },
+        { "day": "Tuesday", "name": "Apiwe" }],
             await waiters.getWaiters())
 
     })
