@@ -67,9 +67,9 @@ describe('Waiter avalability', () => {
                  "name": "Mandla"
                 },
                 {
-                  "day": "Monday"
+                  "day": "Monday",
                   "name": "Mandla"
-                }
+                },
                 {
                  "day": "Tuesday",
                  "name": "Mandla"
