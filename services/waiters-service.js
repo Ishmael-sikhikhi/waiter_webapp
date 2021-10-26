@@ -27,7 +27,7 @@ module.exports = function (pool) {
                 } else {
 
                     let checkOnUser_days = await pool.query(`SELECT * FROM user_days WHERE users_id = $1 AND days_id = $2`, [users_id, theDay]);
-                    console.log(checkOnUser_days.rows)
+                    
                     if (checkOnUser_days.rowCount === 0) {
                         await pool.query(`insert into user_days (users_id, days_id) values ($1,$2)`, [users_id, theDay])
                     }

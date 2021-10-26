@@ -17,15 +17,11 @@ module.exports = function (waitersService) {
         })
     }
 
-    // function owner(req, res) {
-    //     res.render('available-waiters')
-    // }
 
     async function waitersPage(req, res) {
         let username = req.params.username;
         const week = await waitersService.chechDays(username);
-        console.log(week);
-        res.render('waiter-log', {
+       res.render('waiter-log', {
             week, 
             username
         })
@@ -33,9 +29,7 @@ module.exports = function (waitersService) {
 
     async function waitersAvailable(req, res) {
         waiters = await waitersService.getWaiters()
-        // console.log(waiters)
         week = await waitersService.daysColor()
-        // console.log(waiters)
         let sunday = []
         let monday = []
         let tuesday = []
@@ -89,10 +83,7 @@ module.exports = function (waitersService) {
     async function subscribe(req, res) {
         var pattern = /^[A-Za-z]+$/
         var username = req.params.username
-        console.log("Waiter: " + username)
         var day = req.body.day;
-
-        console.log("Selected days " + day)
 
         let condition = pattern.test(username);
 
@@ -108,9 +99,7 @@ module.exports = function (waitersService) {
             req.flash('error', "This name cannot get days, please correct name");
         }
         week = await waitersService.chechDays(username)
-        // res.render('waiter-log',{
-        //     week, username, day
-        // });
+        
         res.redirect(username);
     };    
 
