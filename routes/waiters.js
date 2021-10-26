@@ -94,8 +94,6 @@ module.exports = function (waitersService) {
 
         console.log("Selected days " + day)
 
-        week = await waitersService.chechDays(username)
-
         let condition = pattern.test(username);
 
         if (condition === true) {
@@ -109,10 +107,11 @@ module.exports = function (waitersService) {
         else{
             req.flash('error', "This name cannot get days, please correct name");
         }
-
-        res.render('waiter-log',{
-            week, username, day
-        });
+        week = await waitersService.chechDays(username)
+        // res.render('waiter-log',{
+        //     week, username, day
+        // });
+        res.redirect(username);
     };    
 
     async function weeklyReset(req, res) {

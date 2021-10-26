@@ -68,9 +68,7 @@ module.exports = function (pool) {
         const findShiftId = `select count(*) as day_count from user_days where days_id = $1`;
 
         for (var i = 0; i < days.length; i++) {
-
             const currentDay = days[i];
-
             // is there a shift for the current day...
 
             var result = await pool.query(findShiftId, [currentDay.id])
