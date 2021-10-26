@@ -38,8 +38,6 @@ module.exports = function (waitersService) {
         let friday = []
         let saturday = []
 
-        var myClass = [{Class:'Sun'},{Class:'Mon'},{Class:'Tue'},{Class:'Wed'},{Class:'Thu'},{Class:'Fri'},{Class:'Sat'}]
-
         if (waiters.length === 0) {
             req.flash('errorAvailable', "No waiters available, sorry!")
         }
@@ -69,15 +67,12 @@ module.exports = function (waitersService) {
                     saturday.push(waiters[k].name)
                 }
             }
-
         }
-
       
         res.render('available-waiters', {
             sunday, monday, tuesday, wednesday, thursday, friday, saturday,
             week
         })
-
     }
 
     async function subscribe(req, res) {
