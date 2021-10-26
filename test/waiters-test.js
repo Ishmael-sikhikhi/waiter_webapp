@@ -39,28 +39,7 @@ describe('Waiter avalability', () => {
         assert.deepEqual([{ name: 'Apiwe', day: 'Sunday' }, { name: 'Apiwe', day: 'Monday' }, { name: 'Apiwe', day: 'Thursday' }], await waiters.getWaiters())
 
     })
-    it('test update function', async () => {
-        await waiters.deleteRecord()
-        var days = [1, 2, 3]
-        await waiters.selectDay({ name: 'Apiwe', day: days })
-        await waiters.selectDay({ name: 'Mandla', day: days })
-        await waiters.selectDay({ name: 'Lwazi', day: days })
-
-        await waiters.updateShieft(6)
-
-        assert.deepEqual(
-        [{ "day": "Sunday", "name": "Lwazi" },
-        { "day": "Sunday", "name": "Mandla" },
-        { "day": "Sunday", "name": "Apiwe" },
-        { "day": "Monday", "name": "Lwazi" },
-        { "day": "Monday", "name": "Mandla" },
-        { "day": "Monday", "name": "Apiwe" },
-        { "day": "Tuesday", "name": "Lwazi" },
-        { "day": "Tuesday", "name": "Mandla" },
-        { "day": "Tuesday", "name": "Apiwe" }],
-            await waiters.getWaiters())
-
-    })
+   
     it('Shoud return user id', async () => {
         await waiters.deleteRecord()
         var days = [1, 2, 3]
