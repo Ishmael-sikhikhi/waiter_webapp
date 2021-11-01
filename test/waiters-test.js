@@ -1,3 +1,4 @@
+
 const assert = require('assert');
 const WaiterService = require('../services/waiters-service');
 const pg = require("pg");
@@ -19,6 +20,7 @@ beforeEach(async function () {
 
 });
 
+// eslint-disable-next-line no-undef
 describe('Waiter avalability', () => {
     it('Should add waiter\' shifts', async () => {
         await waiters.deleteRecord();

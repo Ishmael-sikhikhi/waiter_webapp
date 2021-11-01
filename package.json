@@ -3,8 +3,33 @@
   "version": "1.0.0",
   "main": "index.js",
   "directories": {
-    "npm test": "test"
+    "npm test": "test",
+    "eslintConfig": {
+      "env": {
+        "browser": true,
+        "node": true
+      }
+    },
+    "eslintIgnore": [
+      "index.js",
+      "world.js"
+    ],
+      "require-jsdoc": [
+      "error",
+      {
+        "require": {
+          "FunctionDeclaration": true,
+          "MethodDefinition": false,
+          "ClassDeclaration": false,
+          "ArrowFunctionExpression": false,
+          "FunctionExpression": false
+        }
+      }
+    ]
   },
+  
+  
+  
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "autoprefixer": "^10.3.6",
@@ -26,14 +51,19 @@
     "mystyles:sass": "sass public:assets/css",
     "test": "mocha",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix --ext .js,.jsx .",
+    "extends": "eslint:recommended"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "eslint": "^8.1.0",
     "mocha": "^9.1.2",
-    "sass": "^1.42.1"
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2"
   }
 }

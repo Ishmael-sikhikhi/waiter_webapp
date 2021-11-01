@@ -8,7 +8,6 @@ module.exports = function (pool) {
         name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
         var theDays = values.day;
 
-        var theDays = []
         theDays = values.day
         let condition = pattern.test(name);
         if (condition === true) {
@@ -54,6 +53,7 @@ module.exports = function (pool) {
             const dayCount = result.rows[0].day_count;
 
             if (dayCount > 0) {
+                6
                 currentDay.selected = true;
             } else {
                 currentDay.selected = false;
@@ -63,7 +63,8 @@ module.exports = function (pool) {
         return days;
     }
 
-    async function daysColor() {
+    async function daysColor(next) {
+       try{
         var days = await getDays();
         const findShiftId = `select count(*) as day_count from user_days where days_id = $1`;
 
@@ -84,11 +85,15 @@ module.exports = function (pool) {
         }
 
         return days;
+       }
+       catch(err){
+           next(err)
+       }
     }
 
     async function updateShieft(values) {
         await pool.query(`delete from user_days where users_id = $1`, [values])
-    };
+    }
 
     async function getDays() {
         let week = await pool.query(`select id, day from days`);
@@ -116,7 +121,7 @@ module.exports = function (pool) {
 
     async function deleteRecord() {
         await pool.query(`delete from user_days`)
-    };
+    }
 
     return {
         selectDay,

@@ -1,7 +1,4 @@
 'use strick'
-const { Pool } = require('pg');
-const WaiterService = require('../services/waiters-service');
-
 module.exports = function (waitersService) {
 
     let waiter
@@ -78,16 +75,19 @@ module.exports = function (waitersService) {
     async function subscribe(req, res) {
         var pattern = /^[A-Za-z]+$/
         var username = req.params.username
-        var day = req.body.day;
+        var days = req.body.day;
 
         let condition = pattern.test(username);
 
         if (condition === true) {
-            if (username !== '' || username !== undefined) {
+            if (days.length > 1) {
                 waiter = waitersService.selectDay({
                     name: username,
-                    day: day
+                    day: days
                 })
+            }
+            else{
+                req.flash('error', "Please select more than 1 day")
             }
         }
         else{
@@ -96,7 +96,7 @@ module.exports = function (waitersService) {
         week = await waitersService.chechDays(username)
         
         res.redirect(username);
-    };    
+    }    
 
     async function weeklyReset(req, res) {
         await waitersService.deleteRecord()
