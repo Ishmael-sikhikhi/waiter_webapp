@@ -2,12 +2,10 @@ const assert = require('assert');
 const pg = require('pg');
 const WaiterService = require('../services/waiters-service');
 
-const { Pool } = pg.Pool;
-
 // we are using a special test database for the tests
 const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/waiter_test';
 
-const pool = new Pool({
+const pool = new pg.Pool({
   connectionString,
 });
 
@@ -202,7 +200,7 @@ describe('Waiter avalability', () => {
           id: 2,
         },
         {
-          color: 'bg-success',
+          color: 'bg-danger',
           day: 'Tuesday',
           id: 3,
         },
