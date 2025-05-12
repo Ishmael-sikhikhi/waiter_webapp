@@ -48,7 +48,7 @@
     "mystyles:sass": "sass public:assets/css",
     "test": "mocha",
     "migrate": "node migrate.js",
-    "start": "node migrate.js && node index.js",
+    "start": "npm run migrate && node index.js",
     "dev": "nodemon index.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix --ext .js,.jsx .",
