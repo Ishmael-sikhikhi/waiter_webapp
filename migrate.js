@@ -2,7 +2,7 @@
 const fs = require('fs');
 const { Pool } = require('pg');
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/waiters';
+DATABASE_URL="postgresql://waiters_db_user:wuaA40cOKsiiK5Jv9XNjMvIcOOVvClXw@dpg-d0gvdhk9c44c73963bng-a/waiters_db"
 
 const pool = new Pool({
   connectionString,
