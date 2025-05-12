@@ -1,19 +1,27 @@
 // migrate.js
+'use strict';
+
+// Load .env in development
+require('dotenv').config();
+
 const fs = require('fs');
 const { Pool } = require('pg');
 
-DATABASE_URL="postgresql://waiters_db_user:wuaA40cOKsiiK5Jv9XNjMvIcOOVvClXw@dpg-d0gvdhk9c44c73963bng-a/waiters_db"
+// Define the connection string just like in index.js
+const connectionString =
+  process.env.DATABASE_URL ||
+  'postgresql://codex:pg123@localhost:5432/waiters';
 
 const pool = new Pool({
   connectionString,
   ssl: {
     rejectUnauthorized: false,
-  }
+  },
 });
 
 (async () => {
   try {
-    const sql = fs.readFileSync('./tables.sql').toString();
+    const sql = fs.readFileSync('./tables.sql', 'utf8');
     await pool.query(sql);
     console.log('✅ Tables created successfully.');
   } catch (err) {
